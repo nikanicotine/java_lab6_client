@@ -33,7 +33,6 @@ class MyThread extends Thread {
 
     public void run() {
         FunctionIntegral funk = new FunctionIntegral();
-        int j;
         double sum = 0;
         while (limDown + limStep < limUp) {
             sum += ((Math.exp(-limDown) + Math.exp(-(limDown + limStep))) / 2) * limStep;
@@ -41,12 +40,12 @@ class MyThread extends Thread {
         }
         sum += ((Math.exp(-limDown) + Math.exp(-limUp)) / 2) * limStep;
 
-        String message = String.valueOf(sum) + " " + String.valueOf(num);
+        String message = sum + " " + num;
         byte[] buf = message.getBytes();
         DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 26);
         try {
             socket.send(packet);
-            System.out.print("Ok! ");
+            System.out.print("Ok!\n");
         } catch (IOException ex) {
             Logger.getLogger(MyThread.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,6 +57,7 @@ public class Client {
         DatagramSocket socket = new DatagramSocket(17);
         DatagramSocket socketSend = new DatagramSocket();
         InetAddress address = InetAddress.getByName("localhost");
+        System.out.print("waiting\n");
         while (true) {
             byte[] buffer = new byte[256];
             DatagramPacket request = new DatagramPacket(buffer, buffer.length);
