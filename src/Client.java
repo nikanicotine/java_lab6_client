@@ -21,7 +21,7 @@ class MyThread extends Thread {
     DatagramSocket socket;
     InetAddress address;
 
-    MyThread(String name, int _limUp, int _limDown, float _limStep, int _n, DatagramSocket _socket, InetAddress _address) {
+    MyThread(String name, double _limUp, double _limDown, double _limStep, int _n, DatagramSocket _socket, InetAddress _address) {
         super(name);
         limUp = _limUp;
         limDown = _limDown;
@@ -32,7 +32,6 @@ class MyThread extends Thread {
     }
 
     public void run() {
-        FunctionIntegral funk = new FunctionIntegral();
         double sum = 0;
         while (limDown + limStep < limUp) {
             sum += ((Math.exp(-limDown) + Math.exp(-(limDown + limStep))) / 2) * limStep;
@@ -95,7 +94,7 @@ public class Client {
                     j++;
                 }
 
-                MyThread thread = new MyThread("thread", Integer.parseInt(strTop), Integer.parseInt(strLower), Float.parseFloat(strStep), Integer.parseInt(strNum), socketSend, address);
+                MyThread thread = new MyThread("thread", Double.parseDouble(strTop), Double.parseDouble(strLower), Double.parseDouble(strStep), Integer.parseInt(strNum), socketSend, address);
                 thread.start();
             }
         }
